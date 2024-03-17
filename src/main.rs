@@ -44,6 +44,18 @@ impl LinkedVar {
 	}
 }
 
+fn take_linked_action(cmd: &str) -> i32 {
+	let mut shc = std::process::Command::new("/bin/sh");
+	shc.arg("-c")
+		.arg(cmd)
+		.spawn()
+		.expect("Failed to invoke /bin/sh")
+		.wait()
+		.expect("Failed to wait /bin/sh exit")
+		.code()
+		.unwrap_or(-1)
+}
+
 impl LinkedInfo {
 	fn new(cfgpath: &str) -> Option<Self> {
 		let mtinfo = match std::fs::metadata(cfgpath) {
@@ -217,6 +229,11 @@ impl LinkedInfo {
 				&fun as *const rext_var, std::ptr::null(),
 				&mut resp as *mut rext_var) };
 			if let Some(really) = resp.as_bool() {
+				if really {
+					take_linked_action(la.action_true.as_str());
+				} else if let Some(a_false) = la.action_false.as_ref() {
+					take_linked_action(a_false.as_str());
+				}
 				println!("{:5}: {} => {}", really, rval, la.rule_bool);
 			} else {
 				println!("function '{}' has returned: {}", funn, rval);

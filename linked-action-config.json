@@ -1,0 +1,26 @@
+{
+	"linked-vars": {
+		"ex_var1": 1,
+		"ex_var2": 2,
+		"ex_var3": 3,
+		"ex_var4": 4.2,
+		"ex_var5": 5
+	},
+	"linked-action": [
+		{
+			"rule": "(ex_var1 + ex_var2 * 2 + ex_var3 * 3) > 14",
+			"true": "echo 'The planet Earth is freaking too hot'",
+			"false": "echo 'The planet Earth is freaking too cold'"
+		},
+		{
+			"rule": "math.floor(ex_var4 * 5 / 4) > ex_var5",
+			"true": "echo 'Note that floor(ex_var4 * 5 / 4) > ex_var5'",
+			"false": "echo 'Note that floor(ex_var4 * 5 / 4) <= ex_var5'"
+		},
+		{
+			"rule": "(ex_var1 + ex_var2 + ex_var3 + ex_var4 + ex_var4) >= 16",
+			"true": "echo 'All example values summed up greater or equal to 16.'",
+			"false": "echo 'All example values summed up less than 16'"
+		}
+	]
+}
